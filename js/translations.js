@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Multilingual Translation System
+ * VitaNex AI — Multilingual Translation System
  * Supports: English (en), Tamil (ta), Hindi (hi), Spanish (es)
  */
 
@@ -31,7 +31,7 @@ const translations = {
     "dashboard.chartNote": "Based on your logged measurements. For informational purposes only.",
     "search.records": "Search records by title or notes...",
     "copilot.conversations": "Conversations",
-    "copilot.disclaimer": "MediNex AI provides general health information only. Not a substitute for professional medical advice. For emergencies, call local services immediately.",
+    "copilot.disclaimer": "VitaNex AI provides general health information only. Not a substitute for professional medical advice. For emergencies, call local services immediately.",
     "copilot.chip1": "What should I ask my doctor?",
     "copilot.chip2": "Explain my recent lab results",
     "copilot.chip3": "Healthy lifestyle tips",
@@ -67,7 +67,7 @@ const translations = {
     "dashboard.chartNote": "தகவல் நோக்கங்களுக்காக மட்டுமே.",
     "search.records": "தலைப்பு அல்லது குறிப்புகளால் தேடு...",
     "copilot.conversations": "உரையாடல்கள்",
-    "copilot.disclaimer": "MediNex AI பொதுவான சுகாதார தகவல்களை மட்டுமே வழங்குகிறது. மருத்துவ ஆலோசனைக்கு மாற்றாகாது.",
+    "copilot.disclaimer": "VitaNex AI பொதுவான சுகாதார தகவல்களை மட்டுமே வழங்குகிறது. மருத்துவ ஆலோசனைக்கு மாற்றாகாது.",
     "copilot.chip1": "என் மருத்துவரிடம் நான் என்ன கேட்க வேண்டும்?",
     "copilot.chip2": "எனது சமீபத்திய ஆய்வக முடிவுகளை விளக்குங்கள்",
     "copilot.chip3": "ஆரோக்கியமான வாழ்க்கை முறை குறிப்புகள்",
