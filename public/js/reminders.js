@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Reminders Management
+ * VitaNex AI — Reminders Management
  */
 
 import { apiCall } from './auth.js';

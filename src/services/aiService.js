@@ -117,7 +117,7 @@ function generateDemoResponse(prompt, language) {
   } else if (p.includes('blood pressure') || p.includes('bp') || p.includes('heart')) {
     reply = `### [DemoMode] Understanding Blood Pressure\n\nBlood pressure is measured in millimeters of mercury (mmHg) with two numbers: systolic (top) and diastolic (bottom).\n\n- **Normal:** Below 120 / 80 mmHg\n- **Elevated:** 120-129 / less than 80\n- **Hypertension Stage 1:** 130-139 / 80-89\n\n**Tips for accurate measurement:**\n- Sit quietly with feet flat for 5 minutes before measuring.\n- Keep your arm supported at heart level.\n\n*Always consult your cardiologist or primary care physician for interpretation of your readings.*`;
   } else {
-    reply = `### [Demo Mode] MediNex AI Copilot\n\nThank you for your question about **"${prompt}"**.\n\nAs your personal health copilot, I can help you organize records, prepare for upcoming visits, track wellness metrics, and explain general health concepts.\n\n**How can I help further today?** Remember to discuss any medical concerns directly with a licensed healthcare provider.`;
+    reply = `### [Demo Mode] VitaNex AI Copilot\n\nThank you for your question about **"${prompt}"**.\n\nAs your personal health copilot, I can help you organize records, prepare for upcoming visits, track wellness metrics, and explain general health concepts.\n\n**How can I help further today?** Remember to discuss any medical concerns directly with a licensed healthcare provider.`;
   }
 
   if (language === 'ta') {

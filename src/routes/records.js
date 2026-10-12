@@ -156,7 +156,7 @@ router.get('/export/:format', requireAuth, async (req, res, next) => {
 
     if (format === 'json') {
       res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Content-Disposition', 'attachment; filename="medinex-health-records.json"');
+      res.setHeader('Content-Disposition', 'attachment; filename="vitanex-health-records.json"');
       return res.send(JSON.stringify(records, null, 2));
     }
 
@@ -168,7 +168,7 @@ router.get('/export/:format', requireAuth, async (req, res, next) => {
       const csv = [headers.join(','), ...rows].join('\n');
 
       res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename="medinex-health-records.csv"');
+      res.setHeader('Content-Disposition', 'attachment; filename="vitanex-health-records.csv"');
       return res.send(csv);
     }
 

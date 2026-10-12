@@ -1,4 +1,4 @@
--- MediNex AI Row Level Security Policies
+-- VitaNex AI Row Level Security Policies
 -- Run this AFTER schema.sql in your Supabase SQL Editor
 
 -- Enable RLS on all tables

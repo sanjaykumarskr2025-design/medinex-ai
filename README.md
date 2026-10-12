@@ -47,7 +47,7 @@ VitaNex AI integrates these pillars into a single unified platform:
 ## 📂 Project Structure
 
 ```text
-medinex-ai/
+vitanex-ai/
   public/
     index.html
     login.html
@@ -104,8 +104,8 @@ medinex-ai/
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/medinex-ai.git
-cd medinex-ai
+git clone https://github.com/your-username/vitanex-ai.git
+cd vitanex-ai
 npm install
 ```
 
@@ -146,7 +146,7 @@ Open `http://localhost:3000` in your browser.
 
 ## 🤖 AI Configuration
 
-MediNex AI supports three modes for the AI Copilot:
+VitaNex AI supports three modes for the AI Copilot:
 1. **Demo Mode (`AI_PROVIDER=demo`)**: Works out of the box without any API keys. Uses pre-written intelligent health education responses based on keyword matching.
 2. **Anthropic Claude (`AI_PROVIDER=anthropic`)**: Connects to the Anthropic Messages API using `AI_API_KEY`.
 3. **OpenAI (`AI_PROVIDER=openai`)**: Connects to OpenAI Chat Completions.
@@ -175,7 +175,7 @@ npm test
 
 ## 🔒 Original Implementation & Anti-Plagiarism Statement
 
-MediNex AI was built from scratch specifically for the BYTE XL Hackathon. 
+VitaNex AI was built from scratch specifically for the BYTE XL Hackathon. 
 - **Originality:** All frontend UI components, Three.js shaders, CSS design systems, Express route modules, Joi validation schemas, and Supabase RLS security policies were crafted specifically for this project.
 - **Transparency:** No artificial obfuscation or AI-detection evasion techniques were used. The codebase is clean, modular, well-commented, and easily explainable.
 

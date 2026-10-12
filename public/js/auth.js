@@ -1,11 +1,11 @@
 /**
- * MediNex AI — Authentication Client
+ * VitaNex AI — Authentication Client
  */
 
 import { showToast } from './app.js';
 
-const TOKEN_KEY = 'medinex_auth_token';
-const USER_KEY = 'medinex_user';
+const TOKEN_KEY = 'vitanex_auth_token';
+const USER_KEY = 'vitanex_user';
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);

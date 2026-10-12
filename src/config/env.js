@@ -13,7 +13,7 @@ const required = ['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
 const missing = required.filter((key) => !process.env[key]);
 if (missing.length > 0) {
   console.error(
-    `[medinex] Fatal: missing required environment variables: ${missing.join(', ')}\n` +
+    `[vitanex] Fatal: missing required environment variables: ${missing.join(', ')}\n` +
     'Copy .env.example to .env and fill in the values.'
   );
   process.exit(1);

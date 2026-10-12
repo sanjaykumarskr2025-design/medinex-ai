@@ -1,5 +1,5 @@
 /**
- * MediNex AI — AI Health Copilot Chat Logic
+ * VitaNex AI — AI Health Copilot Chat Logic
  */
 
 import { apiCall, getUser } from './auth.js';

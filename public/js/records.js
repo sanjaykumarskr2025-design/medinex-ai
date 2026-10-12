@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Health Records Management
+ * VitaNex AI — Health Records Management
  */
 
 import { apiCall } from './auth.js';
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `medinex-health-records-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `vitanex-health-records-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         showToast('Records exported successfully.', 'success');
       } catch (err) {

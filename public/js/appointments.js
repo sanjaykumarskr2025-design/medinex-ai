@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Appointments Management
+ * VitaNex AI — Appointments Management
  */
 
 import { apiCall } from './auth.js';

@@ -265,7 +265,7 @@
         <p style="color: var(--text-muted); margin: 8px 0 20px;">Ask health questions, interpret lab metrics, or prepare for upcoming doctor visits.</p>
         <div id="chatBox" style="height: 320px; background: rgba(3,7,18,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; overflow-y: auto; margin-bottom: 16px;">
           <div style="background: rgba(0,242,254,0.08); border-left: 3px solid var(--cyan); padding: 12px 16px; border-radius: 8px; margin-bottom: 14px;">
-            <strong>MediNex AI:</strong> Hello! I am your personal health copilot. How can I assist with your wellness today?
+            <strong>VitaNex AI:</strong> Hello! I am your personal health copilot. How can I assist with your wellness today?
           </div>
         </div>
         <div style="display: flex; gap: 12px;">
@@ -352,7 +352,7 @@
         let reply = "Maintaining regular vital checks and consulting your physician ensures optimal long-term wellness. Always verify medical decisions with a licensed healthcare provider.";
         if(text.toLowerCase().includes('pressure')) reply = "Normal blood pressure is generally below 120/80 mmHg. Monitoring trends over time helps your doctor evaluate cardiovascular health.";
         if(text.toLowerCase().includes('prep')) reply = "For your doctor visit, write down your current symptoms, list all active medications, and prepare 3 key health questions.";
-        box.innerHTML += `<div style="background: rgba(0,242,254,0.08); border-left: 3px solid var(--cyan); padding: 12px 16px; border-radius: 8px; margin-bottom: 14px;"><strong>MediNex AI:</strong> ${reply}</div>`;
+        box.innerHTML += `<div style="background: rgba(0,242,254,0.08); border-left: 3px solid var(--cyan); padding: 12px 16px; border-radius: 8px; margin-bottom: 14px;"><strong>VitaNex AI:</strong> ${reply}</div>`;
         box.scrollTop = box.scrollHeight;
       }, 500);
       box.scrollTop = box.scrollHeight;
@@ -449,4 +449,4 @@
   </script>
 </body>
 </html>
-/* MediNex AI 3D Home Update timestamp: 2026-10-12 */
+/* VitaNex AI 3D Home Update timestamp: 2026-10-12 */

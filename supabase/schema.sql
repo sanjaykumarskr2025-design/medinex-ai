@@ -1,4 +1,4 @@
--- MediNex AI Database Schema
+-- VitaNex AI Database Schema
 -- Run this in your Supabase SQL Editor to set up all tables
 
 -- Enable UUID extension

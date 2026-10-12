@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Dashboard Overview Logic
+ * VitaNex AI — Dashboard Overview Logic
  */
 
 import { apiCall } from './auth.js';

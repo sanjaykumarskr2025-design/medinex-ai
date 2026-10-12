@@ -1,5 +1,5 @@
 /**
- * MediNex AI — User Profile & Settings
+ * VitaNex AI — User Profile & Settings
  */
 
 import { apiCall, getUser, clearSession } from './auth.js';
@@ -60,7 +60,7 @@ async function loadProfile() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `medinex-complete-user-data-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `vitanex-complete-user-data-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         showToast('All health data exported successfully.', 'success');
       } catch (err) {
