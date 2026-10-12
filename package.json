@@ -1,8 +1,8 @@
 {
-  "name": "medinex-ai",
+  "name": "vitanex-ai",
   "version": "1.0.0",
   "type": "module",
-  "description": "MediNex AI — Personal Health Copilot for managing health records, appointments, and wellness insights",
+  "description": "VitaNex AI — Personal Health Copilot for managing health records, appointments, and wellness insights",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

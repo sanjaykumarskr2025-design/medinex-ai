@@ -1,4 +1,4 @@
-# MediNex AI — Personal Health Copilot
+# VitaNex AI — Personal Health Copilot
 
 > **BYTE XL Hackathon Submission** — An advanced, full-stack, AI-powered personal health management platform featuring 3D WebGL visualizations, secure PostgreSQL database with Row Level Security (RLS), interactive health analytics charts, appointment preparation, and comprehensive multilingual support (English, Tamil, Hindi, Spanish).
 
@@ -14,8 +14,8 @@ Personal health management is fragmented, overwhelming, and inaccessible. Patien
 4. **Language Barriers:** Health apps predominantly built in English, isolating non-English speakers (such as Tamil, Hindi, and Spanish speakers).
 5. **Privacy Concerns:** Health data privacy is paramount, yet many apps lack robust, verifiable access controls.
 
-### Our Solution: MediNex AI
-MediNex AI integrates these pillars into a single unified platform:
+### Our Solution: VitaNex AI
+VitaNex AI integrates these pillars into a single unified platform:
 - **AI Health Copilot:** Provides general health education, explains medical terminology, and assists with appointment preparation.
 - **Secure Architecture:** Built on Supabase PostgreSQL with strict Row Level Security (RLS) ensuring strict user data isolation.
 - **Immersive 3D UI:** Deep navy/cyan/violet aesthetic featuring interactive Three.js medical visualizations.
