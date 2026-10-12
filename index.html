@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediNex AI — Personal Health Copilot</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Chart.js & Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="dark-theme">
+  <div id="app" class="app-container">
+    <!-- Sidebar / Navigation -->
+    <aside class="sidebar glass-panel">
+      <div class="sidebar-header">
+        <div class="logo-icon">🧬</div>
+        <h2>MediNex AI</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-target="dashboard">
+          <span class="nav-icon">📊</span> <span data-i18n="nav_dashboard">Dashboard</span>
+        </a>
+        <a href="#records" class="nav-item" data-target="records">
+          <span class="nav-icon">📋</span> <span data-i18n="nav_records">Health Records</span>
+        </a>
+        <a href="#analytics" class="nav-item" data-target="analytics">
+          <span class="nav-icon">📈</span> <span data-i18n="nav_analytics">Analytics & Vitals</span>
+        </a>
+        <a href="#copilot" class="nav-item" data-target="copilot">
+          <span class="nav-icon">🤖</span> <span data-i18n="nav_copilot">AI Health Copilot</span>
+        </a>
+        <a href="#appointments" class="nav-item" data-target="appointments">
+          <span class="nav-icon">📅</span> <span data-i18n="nav_appointments">Appointments</span>
+        </a>
+        <a href="#reminders" class="nav-item" data-target="reminders">
+          <span class="nav-icon">⏰</span> <span data-i18n="nav_reminders">Reminders</span>
+        </a>
+        <a href="#profile" class="nav-item" data-target="profile">
+          <span class="nav-icon">👤</span> <span data-i18n="nav_profile">Profile & Settings</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="language-selector">
+          <label for="languageSelect">🌐</label>
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="es">Español (Spanish)</option>
+          </select>
+        </div>
+        <button id="logoutBtn" class="btn btn-outline btn-sm" data-i18n="btn_logout">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="topbar glass-panel">
+        <div class="topbar-title">
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageSubtitle" data-i18n="subtitle_welcome">Welcome back to your personalized health command center.</p>
+        </div>
+        <div class="topbar-actions">
+          <div id="aiStatusBadge" class="badge badge-success">AI Copilot: Online</div>
+          <div class="user-avatar" id="userAvatarDisplay">SN</div>
+        </div>
+      </header>
+
+      <!-- Views Container -->
+      <div class="views-wrapper">
+        <!-- Dashboard View -->
+        <section id="dashboardView" class="view-section active">
+          <div class="dashboard-grid">
+            <div class="glass-card hero-card">
+              <div class="hero-text">
+                <h2>Your Health at a Glance</h2>
+                <p>AI-powered longitudinal health insights and wellness tracking.</p>
+                <button class="btn btn-primary" onclick="navigate('copilot')">Ask AI Health Copilot</button>
+              </div>
+              <div id="webglContainer" class="hero-3d"></div>
+            </div>
+            <div class="glass-card stats-card">
+              <h3>Recent Vitals</h3>
+              <div id="dashboardVitalsList" class="vitals-summary-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Records View -->
+        <section id="recordsView" class="view-section">
+          <div class="section-header">
+            <h2>Health Records</h2>
+            <button class="btn btn-primary" id="addRecordBtn">+ Add Record</button>
+          </div>
+          <div class="glass-card">
+            <div class="filter-bar">
+              <input type="text" id="recordSearch" placeholder="Search records..." class="form-input">
+              <select id="recordTypeFilter" class="form-select">
+                <option value="">All Types</option>
+                <option value="checkup">Checkup</option>
+                <option value="lab">Lab Result</option>
+                <option value="prescription">Prescription</option>
+                <option value="vaccination">Vaccination</option>
+              </select>
+            </div>
+            <div id="recordsTableContainer" class="table-container"></div>
+          </div>
+        </section>
+
+        <!-- Analytics View -->
+        <section id="analyticsView" class="view-section">
+          <h2>Health Metrics & Analytics</h2>
+          <div class="analytics-grid">
+            <div class="glass-card chart-card">
+              <h3>Blood Pressure Trends</h3>
+              <canvas id="bpChart"></canvas>
+            </div>
+            <div class="glass-card chart-card">
+              <h3>Heart Rate (BPM)</h3>
+              <canvas id="hrChart"></canvas>
+            </div>
+            <div class="glass-card chart-card">
+              <h3>Weight & BMI</h3>
+              <canvas id="weightChart"></canvas>
+            </div>
+            <div class="glass-card chart-card">
+              <h3>Blood Glucose</h3>
+              <canvas id="glucoseChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- Copilot View -->
+        <section id="copilotView" class="view-section">
+          <div class="copilot-container glass-card">
+            <div class="copilot-header">
+              <h2>🤖 AI Health Educator Copilot</h2>
+              <p>Ask health questions, clarify lab results, or prepare for upcoming appointments.</p>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-suggestions">
+              <button class="chip" data-question="What do my recent blood pressure readings mean?">Blood Pressure meaning?</button>
+              <button class="chip" data-question="How can I prepare for my upcoming doctor appointment?">Doctor visit preparation</button>
+              <button class="chip" data-question="What are normal resting heart rate ranges?">Normal heart rate?</button>
+            </div>
+            <div class="chat-input-bar">
+              <input type="text" id="chatInput" placeholder="Ask a health question..." class="form-input">
+              <button id="sendChatBtn" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Appointments View -->
+        <section id="appointmentsView" class="view-section">
+          <div class="section-header">
+            <h2>Doctor Appointments</h2>
+            <button class="btn btn-primary" id="addAppointmentBtn">+ New Appointment</button>
+          </div>
+          <div id="appointmentsList" class="cards-grid"></div>
+        </section>
+
+        <!-- Reminders View -->
+        <section id="remindersView" class="view-section">
+          <div class="section-header">
+            <h2>Medication & Health Reminders</h2>
+            <button class="btn btn-primary" id="addReminderBtn">+ Add Reminder</button>
+          </div>
+          <div id="remindersList" class="cards-grid"></div>
+        </section>
+
+        <!-- Profile View -->
+        <section id="profileView" class="view-section">
+          <div class="glass-card profile-card">
+            <h2>User Profile & Security</h2>
+            <form id="profileForm" class="form-grid">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="profileName" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="profileEmail" class="form-input" disabled>
+              </div>
+              <div class="form-group">
+                <label>Emergency Contact</label>
+                <input type="text" id="profileEmergency" class="form-input">
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
