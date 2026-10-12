@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../src/server.js';
 
-describe('MediNex AI API Tests', () => {
+describe('VitaNex AI API Tests', () => {
   describe('GET /', () => {
     it('should return server status or static files', async () => {
       const res = await request(app).get('/');

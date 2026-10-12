@@ -7,7 +7,7 @@
 
 import config from '../config/env.js';
 
-const SYSTEM_PROMPT = `You are MediNex AI, a professional, empathetic personal health information assistant and copilot.
+const SYSTEM_PROMPT = `You are VitaNex AI, a professional, empathetic personal health information assistant and copilot.
 Your role is to help users organize health records, prepare for doctor appointments, understand general health concepts, and track wellness goals.
 
 CRITICAL SAFETY RULES:

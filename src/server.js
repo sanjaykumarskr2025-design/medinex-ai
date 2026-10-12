@@ -62,7 +62,7 @@ app.use('/api/profile', profileRoutes);
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    app: 'MediNex AI API',
+    app: 'VitaNex AI API',
     timestamp: new Date().toISOString(),
     ai_provider: config.ai.provider,
   });
