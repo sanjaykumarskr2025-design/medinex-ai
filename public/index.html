@@ -154,6 +154,42 @@
       gap: 24px;
     }
     @media(max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
+
+    /* Dashboard Reference Image Showcase */
+    .dashboard-showcase-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 140, 0, 0.3);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 140, 0, 0.15);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .dashboard-showcase-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #ff8c00, var(--cyan), var(--blue));
+    }
+    .dashboard-showcase-img {
+      width: 100%;
+      height: auto;
+      max-height: 550px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .dashboard-showcase-img:hover {
+      transform: scale(1.01);
+      box-shadow: 0 12px 40px rgba(255, 140, 0, 0.25);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .dashboard-showcase-img:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -197,22 +233,15 @@
         </div>
       </div>
 
-      <div class="card">
-        <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Recent Vitals Summary</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-          <div style="background: rgba(0,242,254,0.03); border: 1px solid rgba(0,242,254,0.1); padding: 18px; border-radius: 12px;">
-            <small style="color: var(--text-muted); font-weight: 600;">Blood Pressure</small>
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan); margin-top: 6px;">120/80 <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">mmHg</span></div>
+      <div class="dashboard-showcase-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 1.25rem; color: #ffab40;">Heart Health & Wellness Command Center</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Live preview of the VitaNex AI dashboard interface and biometric monitoring suite.</p>
           </div>
-          <div style="background: rgba(0,242,254,0.03); border: 1px solid rgba(0,242,254,0.1); padding: 18px; border-radius: 12px;">
-            <small style="color: var(--text-muted); font-weight: 600;">Heart Rate</small>
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan); margin-top: 6px;">72 <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">bpm</span></div>
-          </div>
-          <div style="background: rgba(0,242,254,0.03); border: 1px solid rgba(0,242,254,0.1); padding: 18px; border-radius: 12px;">
-            <small style="color: var(--text-muted); font-weight: 600;">Blood Glucose</small>
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan); margin-top: 6px;">98 <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">mg/dL</span></div>
-          </div>
+          <span class="badge" style="background: rgba(255,140,0,0.15); color: #ffab40; border-color: rgba(255,140,0,0.3);">Live Preview</span>
         </div>
+        <img src="./images/health-dashboard-reference.png" alt="VitaNex AI Heart Health Dashboard and Biometric Analytics Interface" class="dashboard-showcase-img">
       </div>
     </div>
 
