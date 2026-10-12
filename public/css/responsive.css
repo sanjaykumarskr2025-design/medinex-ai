@@ -1,0 +1,162 @@
+/* ============================================================
+   MediNex AI — Responsive Layouts & Breakpoints
+   Mobile-first multi-device layout rules for 360px up to 1920px+.
+   ============================================================ */
+
+/* ---- Small Smartphones (360px baseline) ------------------- */
+/* Base styles in styles.css are mobile-first (360px+).
+   Adjustments for very compact viewports: */
+@media (max-width: 389px) {
+  .container { padding: 0 10px; }
+  .card { padding: var(--sp-3); }
+  .navbar { padding: 0 10px; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.25rem; }
+  .stat-card__value { font-size: 1.5rem; }
+}
+
+/* ---- Large Smartphones (390px+) --------------------------- */
+@media (min-width: 390px) {
+  .container { padding: 0 var(--sp-4); }
+  .dashboard-grid { grid-template-columns: 1fr; gap: var(--sp-4); }
+}
+
+/* ---- Tablets & iPads (768px+) ----------------------------- */
+@media (min-width: 768px) {
+  .container { padding: 0 var(--sp-5); }
+
+  /* 2-column grid for cards and dashboards */
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-5);
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Side-by-side forms */
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+  }
+
+  /* Typography scale up */
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.75rem; }
+
+  /* Navigation: hide hamburger, show links */
+  .hamburger { display: none; }
+  .mobile-drawer { display: none !important; }
+  .navbar__links { display: flex; }
+}
+
+/* ---- Laptops (1024px+) ------------------------------------ */
+@media (min-width: 1024px) {
+  /* 3-column dashboard grid */
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .metric-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Enable sidebar navigation for dashboard layout */
+  .dashboard-sidebar {
+    display: block;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 240px 1fr;
+  }
+
+  .dashboard-main {
+    margin-left: 240px;
+    padding: var(--sp-6);
+  }
+
+  /* Two-column chat split layout (history sidebar + active chat) */
+  .chat-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--sp-4);
+    height: calc(100vh - 120px);
+  }
+}
+
+/* ---- Desktop & Wide Screens (1440px+) --------------------- */
+@media (min-width: 1440px) {
+  .container { max-width: 1320px; }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .dashboard-main {
+    padding: var(--sp-7);
+  }
+
+  /* Wider content area for chat */
+  .chat-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+/* ---- Extra Wide Screens (1920px+) ------------------------- */
+@media (min-width: 1920px) {
+  .container { max-width: 1560px; }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-6);
+  }
+
+  body { font-size: 17px; }
+}
+
+/* ---- Height-based queries (Landscape mobile & short screens) */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: var(--sp-7) 0; }
+  .auth-page { min-height: auto; padding: var(--sp-6) 0; }
+  .chat-container { height: 400px; min-height: auto; }
+}
+
+/* ---- Touch target guarantees ------------------------------ */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .navbar__link, .sidebar__nav-item, .form-control,
+  .pagination__btn, .tab, .suggestion-chip {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent iOS zoom on input focus by ensuring 16px minimum */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ---- Container Queries (where supported) ------------------- */
+@container (min-width: 500px) {
+  .card-inner-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+  }
+}
