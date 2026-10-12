@@ -1,1 +1,0 @@
-# medinex-ai
