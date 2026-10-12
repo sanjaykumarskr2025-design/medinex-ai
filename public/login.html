@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — MediNex AI</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body class="dark-theme auth-body">
+  <div class="auth-container glass-card">
+    <div class="auth-header">
+      <div class="logo-icon">🧬</div>
+      <h2>MediNex AI</h2>
+      <p>Personal Health Copilot & Longitudinal Analytics</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Login</button>
+      <button class="tab-btn" data-tab="register">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="auth-form active">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" class="form-input" required placeholder="user@example.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" class="form-input" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="auth-form">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="regName" class="form-input" required placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="regEmail" class="form-input" required placeholder="user@example.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="regPassword" class="form-input" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Secure Supabase Auth & Row Level Security Enabled</p>
+    </div>
+  </div>
+
+  <script type="module" src="/js/auth.js"></script>
+</body>
+</html>
