@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Main Application Controller & UI Helpers
+ * VitaNex AI — Main Application Controller & UI Helpers
  */
 
 import { getUser, getToken } from './auth.js';

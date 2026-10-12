@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Three.js 3D Medical Visualization Scene
+ * VitaNex AI — Three.js 3D Medical Visualization Scene
  */
 
 function init3DScene(containerId, isMini = false) {

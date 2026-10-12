@@ -1,5 +1,5 @@
 /**
- * MediNex AI — Health Analytics & Metrics Logic
+ * VitaNex AI — Health Analytics & Metrics Logic
  */
 
 import { apiCall } from './auth.js';

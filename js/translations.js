@@ -103,7 +103,7 @@ const translations = {
     "dashboard.chartNote": "केवल सूचना के उद्देश्यों के लिए।",
     "search.records": "शीर्षक या नोट्स द्वारा खोजें...",
     "copilot.conversations": "बातचीत",
-    "copilot.disclaimer": "MediNex AI केवल सामान्य स्वास्थ्य जानकारी प्रदान करता है। चिकित्सा सलाह का विकल्प नहीं है।",
+    "copilot.disclaimer": "VitaNex AI केवल सामान्य स्वास्थ्य जानकारी प्रदान करता है। चिकित्सा सलाह का विकल्प नहीं है।",
     "copilot.chip1": "मुझे अपने डॉक्टर से क्या पूछना चाहिए?",
     "copilot.chip2": "मेरे हालिया लैब परिणामों की व्याख्या करें",
     "copilot.chip3": "स्वस्थ जीवन शैली के सुझाव",
@@ -139,7 +139,7 @@ const translations = {
     "dashboard.chartNote": "Basado en tus mediciones guardadas. Solo con fines informativos.",
     "search.records": "Buscar registros...",
     "copilot.conversations": "Conversaciones",
-    "copilot.disclaimer": "MediNex AI proporciona información general de salud. No sustituye el consejo médico profesional.",
+    "copilot.disclaimer": "VitaNex AI proporciona información general de salud. No sustituye el consejo médico profesional.",
     "copilot.chip1": "¿Qué debo preguntarle a mi doctor?",
     "copilot.chip2": "Explicar mis resultados de laboratorio",
     "copilot.chip3": "Consejos de vida saludable",
@@ -150,12 +150,12 @@ const translations = {
   }
 };
 
-let currentLang = localStorage.getItem('medinex_lang') || 'en';
+let currentLang = localStorage.getItem('vitanex_lang') || 'en';
 
 function setLanguage(lang) {
   if (translations[lang]) {
     currentLang = lang;
-    localStorage.setItem('medinex_lang', lang);
+    localStorage.setItem('vitanex_lang', lang);
     translatePage();
     document.documentElement.setAttribute('lang', lang);
   }
