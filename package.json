@@ -8,8 +8,8 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --forceExit",
-    "predeploy": "mkdir -p dist && cp -r public/* dist/ && cp index.html dist/ 2>/dev/null || true",
-    "deploy": "gh-pages -d public"
+    "predeploy": "mkdir dist 2>nul || true && xcopy /s /e /y public dist\\ && copy index.html dist\\",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",

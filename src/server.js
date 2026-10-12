@@ -85,7 +85,7 @@ if (process.env.NODE_ENV !== 'test') {
   const port = config.server.port;
   app.listen(port, () => {
     console.log(`\n========================================`);
-    console.log(` MediNex AI Server running on port ${port} `);
+    console.log(` VitaNex AI Server running on port ${port} `);
     console.log(` Environment: ${config.server.nodeEnv}`);
     console.log(` AI Provider: ${config.ai.provider}`);
     console.log(`========================================\n`);
