@@ -4,480 +4,350 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediNex AI — Personal Health Copilot</title>
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/responsive.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
-      --bg-base: #070b19;
-      --bg-surface: rgba(13, 20, 48, 0.95);
-      --cyan: #00f2fe;
-      --blue: #4facfe;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
+      --bg: #030712;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --cyan: #06b6d4;
+      --blue: #3b82f6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: var(--bg-base);
-      color: var(--text-main);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-      width: 100vw;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
       height: 100vh;
       overflow: hidden;
-    }
-    .app-layout {
       display: flex;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
     }
-    .sidebar {
+    aside {
       width: 260px;
-      height: 100vh;
-      background: var(--bg-surface);
-      border-right: 1px solid rgba(0, 242, 254, 0.15);
-      padding: 24px;
+      background: var(--card-bg);
+      border-right: 1px solid rgba(6, 182, 212, 0.2);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      flex-shrink: 0;
-      z-index: 10;
-    }
-    @media(max-width: 900px) {
-      .sidebar { width: 220px; }
+      padding: 24px;
     }
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
       font-size: 1.25rem;
       font-weight: 700;
       color: var(--cyan);
-      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
     }
-    .nav-links {
+    .nav-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .nav-btn {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .nav-item {
       padding: 12px 16px;
       background: transparent;
       border: none;
-      color: var(--text-muted);
+      color: var(--muted);
+      text-align: left;
       border-radius: 8px;
       cursor: pointer;
-      text-align: left;
       font-weight: 500;
-      width: 100%;
-      transition: all 0.2s ease;
+      transition: 0.2s;
     }
-    .nav-btn:hover, .nav-btn.active {
-      background: rgba(0, 242, 254, 0.1);
+    .nav-item:hover, .nav-item.active {
+      background: rgba(6, 182, 212, 0.15);
       color: var(--cyan);
     }
-    .main-area {
+    main {
       flex: 1;
-      height: 100vh;
       padding: 32px;
       overflow-y: auto;
-      background: radial-gradient(circle at top right, rgba(0,242,254,0.04) 0%, transparent 60%);
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
     }
-    .view-panel {
-      display: none;
-    }
-    .view-panel.active {
-      display: block;
-    }
+    .panel { display: none; }
+    .panel.active { display: block; }
     .card {
-      background: var(--bg-surface);
-      border: 1px solid rgba(0, 242, 254, 0.15);
+      background: var(--card-bg);
+      border: 1px solid rgba(6, 182, 212, 0.2);
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       margin-bottom: 24px;
     }
-    .hero-grid {
+    .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
-      align-items: center;
     }
-    @media(max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
+    @media(max-width: 900px) {
+      body { flex-direction: column; overflow: auto; }
+      aside { width: 100%; height: auto; }
+      main { overflow: visible; }
+      .grid-2 { grid-template-columns: 1fr; }
     }
-    .hero-3d-box {
+    .webgl-box {
       width: 100%;
       height: 300px;
-      position: relative;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.3);
       border-radius: 12px;
       overflow: hidden;
+      position: relative;
     }
-    .btn-glow {
+    .btn {
       background: linear-gradient(135deg, var(--cyan), var(--blue));
       color: #000;
       font-weight: 600;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
-      transition: transform 0.2s;
-    }
-    .btn-glow:hover { transform: translateY(-2px); }
-    .analytics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    @media(max-width: 768px) {
-      .analytics-grid { grid-template-columns: 1fr; }
-    }
-    .chat-box {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
-      background: rgba(5, 8, 20, 0.5);
-    }
-    .chat-input-row {
-      display: flex;
-      gap: 12px;
-    }
-    .input-field {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 12px 16px;
-      color: #fff;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
     }
     .badge {
       display: inline-block;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 12px;
       font-size: 0.75rem;
-      font-weight: 600;
-      background: rgba(0, 230, 118, 0.15);
-      color: #00e676;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+    .input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #fff;
+      outline: none;
     }
   </style>
 </head>
 <body>
-  <div class="app-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div>
-        <div class="brand">
-          <span>🧬</span> MediNex AI
+  <aside>
+    <div>
+      <div class="brand">🧬 MediNex AI</div>
+      <div class="nav-list">
+        <button class="nav-item active" onclick="changeTab('dash', this)">📊 Dashboard</button>
+        <button class="nav-item" onclick="changeTab('records', this)">📋 Health Records</button>
+        <button class="nav-item" onclick="changeTab('analytics', this)">📈 Analytics & Vitals</button>
+        <button class="nav-item" onclick="changeTab('copilot', this)">🤖 AI Health Copilot</button>
+        <button class="nav-item" onclick="changeTab('appointments', this)">📅 Appointments</button>
+        <button class="nav-item" onclick="changeTab('reminders', this)">⏰ Reminders</button>
+        <button class="nav-item" onclick="changeTab('profile', this)">👤 Profile</button>
+      </div>
+    </div>
+    <div>
+      <span class="badge">● System Online</span>
+    </div>
+  </aside>
+
+  <main>
+    <!-- Dashboard -->
+    <div id="dashPanel" class="panel active">
+      <h1 id="topTitle" style="font-size: 1.8rem; margin-bottom: 24px;">Dashboard</h1>
+      <div class="grid-2">
+        <div class="card">
+          <h2>Health Command Center</h2>
+          <p style="color: var(--muted); margin: 12px 0 20px;">Longitudinal health tracking powered by secure RLS and real-time AI copilot.</p>
+          <button class="btn" onclick="changeTab('copilot', document.querySelectorAll('.nav-item')[3])">Ask AI Copilot</button>
         </div>
-        <div class="nav-links">
-          <button class="nav-btn active" onclick="switchView('dashboard')">📊 Dashboard</button>
-          <button class="nav-btn" onclick="switchView('records')">📋 Health Records</button>
-          <button class="nav-btn" onclick="switchView('analytics')">📈 Analytics & Vitals</button>
-          <button class="nav-btn" onclick="switchView('copilot')">🤖 AI Health Copilot</button>
-          <button class="nav-btn" onclick="switchView('appointments')">📅 Appointments</button>
-          <button class="nav-btn" onclick="switchView('reminders')">⏰ Reminders</button>
-          <button class="nav-btn" onclick="switchView('profile')">👤 Profile</button>
+        <div class="card">
+          <h3 style="margin-bottom: 12px;">3D Health Visualization</h3>
+          <div id="canvas3d" class="webgl-box"></div>
         </div>
       </div>
-      <div>
-        <div class="badge" style="margin-bottom: 12px;">● Copilot Online</div>
-        <button class="nav-btn" style="color: #ff5252;" onclick="location.href='./public/login.html'">🚪 Logout</button>
+      <div class="card">
+        <h3>Recent Vitals Overview</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;">
+          <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px;">
+            <small style="color: var(--muted);">Blood Pressure</small>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--cyan); margin-top: 4px;">120 / 80</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px;">
+            <small style="color: var(--muted);">Heart Rate</small>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--cyan); margin-top: 4px;">72 bpm</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px;">
+            <small style="color: var(--muted);">Glucose</small>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--cyan); margin-top: 4px;">98 mg/dL</div>
+          </div>
+        </div>
       </div>
-    </aside>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-area">
-      <!-- Dashboard View -->
-      <section id="dashboardView" class="view-panel active">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <div>
-            <h1 id="pageTitle" style="margin: 0; font-size: 1.8rem;">Dashboard</h1>
-            <p style="margin: 4px 0 0; color: var(--text-muted);">Personal health command center & longitudinal analytics.</p>
-          </div>
-          <div>
-            <span class="badge" id="todayDate">October 12, 2026</span>
+    <!-- Records -->
+    <div id="recordsPanel" class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h1>Health Records</h1>
+        <button class="btn" onclick="alert('Add Record modal')">+ Add Record</button>
+      </div>
+      <div class="card">
+        <input type="text" class="input" placeholder="Search records..." style="margin-bottom: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px; display: flex; justify-content: space-between;">
+            <div><strong>Annual Checkup</strong><p style="color: var(--muted); font-size: 0.85rem;">Dr. Jenkins - Oct 2026</p></div>
+            <span class="badge">Checkup</span>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="hero-grid">
-          <div class="card">
-            <h2>Your Health at a Glance</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Real-time 3D health visualization and predictive wellness indicators.</p>
-            <button class="btn-glow" onclick="switchView('copilot')">Ask AI Health Copilot</button>
-          </div>
-          <div class="card" style="padding: 12px;">
-            <div id="webglContainer" class="hero-3d-box"></div>
-          </div>
-        </div>
+    <!-- Analytics -->
+    <div id="analyticsPanel" class="panel">
+      <h1 style="margin-bottom: 24px;">Analytics & Vitals</h1>
+      <div class="grid-2">
+        <div class="card"><h3 style="margin-bottom: 12px;">Blood Pressure Trends</h3><canvas id="c1" height="180"></canvas></div>
+        <div class="card"><h3 style="margin-bottom: 12px;">Heart Rate History</h3><canvas id="c2" height="180"></canvas></div>
+      </div>
+    </div>
 
-        <div class="card">
-          <h3>Recent Vitals</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
-            <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px;">
-              <small style="color: var(--text-muted);">Blood Pressure</label>
-              <div style="font-size: 1.4rem; font-weight: 700; color: var(--cyan); margin-top: 4px;">120/80 <span style="font-size:0.8rem; color:var(--text-muted);">mmHg</span></div>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px;">
-              <small style="color: var(--text-muted);">Heart Rate</small>
-              <div style="font-size: 1.4rem; font-weight: 700; color: var(--cyan); margin-top: 4px;">72 <span style="font-size:0.8rem; color:var(--text-muted);">bpm</span></div>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px;">
-              <small style="color: var(--text-muted);">Blood Glucose</small>
-              <div style="font-size: 1.4rem; font-weight: 700; color: var(--cyan); margin-top: 4px;">98 <span style="font-size:0.8rem; color:var(--text-muted);">mg/dL</span></div>
-            </div>
-          </div>
+    <!-- Copilot -->
+    <div id="copilotPanel" class="panel">
+      <div class="card">
+        <h1>🤖 AI Health Copilot</h1>
+        <p style="color: var(--muted); margin: 8px 0 16px;">Ask questions regarding your health, vitals, or appointment preparations.</p>
+        <div id="chatBox" style="height: 280px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; overflow-y: auto; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="background: rgba(6,182,212,0.1); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--cyan); margin-bottom: 12px;"><strong>MediNex AI:</strong> Hello! I am your personal health copilot. How can I assist you today?</div>
         </div>
-      </section>
+        <div style="display: flex; gap: 12px;">
+          <input type="text" id="chatIn" class="input" placeholder="Ask a health question..." onkeydown="if(event.key==='Enter') sendMsg()">
+          <button class="btn" onclick="sendMsg()">Send</button>
+        </div>
+      </div>
+    </div>
 
-      <!-- Records View -->
-      <section id="recordsView" class="view-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2>Health Records</h2>
-          <button class="btn-glow" onclick="alert('Record creation modal opened')">+ Add Record</button>
+    <!-- Appointments -->
+    <div id="appointmentsPanel" class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h1>Appointments</h1>
+        <button class="btn" onclick="alert('New appointment')">+ New Appointment</button>
+      </div>
+      <div class="card">
+        <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px;">
+          <strong>Dr. Robert Chen (Cardiologist)</strong>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">Oct 18, 2026 - 10:00 AM</p>
         </div>
-        <div class="card">
-          <input type="text" class="input-field" placeholder="Search records by title, doctor, or diagnosis..." style="width: 100%; margin-bottom: 16px;">
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px;">
-              <div>
-                <strong>Annual Physical Examination</strong>
-                <p style="margin: 2px 0 0; font-size: 0.85rem; color: var(--text-muted);">Dr. Sarah Jenkins — General Checkup</p>
-              </div>
-              <span class="badge" style="background: rgba(0,212,255,0.15); color: var(--cyan);">Checkup</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px;">
-              <div>
-                <strong>Complete Blood Count (CBC)</strong>
-                <p style="margin: 2px 0 0; font-size: 0.85rem; color: var(--text-muted);">City Pathology Lab — Lab Results</p>
-              </div>
-              <span class="badge" style="background: rgba(157,123,234,0.15); color: #9d7bea;">Lab Result</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+    </div>
 
-      <!-- Analytics View -->
-      <section id="analyticsView" class="view-panel">
-        <h2>Health Metrics & Analytics</h2>
-        <div class="analytics-grid">
-          <div class="card">
-            <h3 style="margin-bottom: 12px;">Blood Pressure Trends</h3>
-            <canvas id="bpChart" height="180"></canvas>
-          </div>
-          <div class="card">
-            <h3 style="margin-bottom: 12px;">Heart Rate (BPM)</h3>
-            <canvas id="hrChart" height="180"></canvas>
-          </div>
+    <!-- Reminders -->
+    <div id="remindersPanel" class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h1>Reminders</h1>
+        <button class="btn" onclick="alert('New reminder')">+ Add Reminder</button>
+      </div>
+      <div class="card">
+        <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 8px;">
+          <strong>Vitamin D3 (1000 IU)</strong>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">Daily at 9:00 AM</p>
         </div>
-      </section>
+      </div>
+    </div>
 
-      <!-- Copilot View -->
-      <section id="copilotView" class="view-panel">
-        <div class="card">
-          <h2>🤖 AI Health Educator Copilot</h2>
-          <p style="color: var(--text-muted); margin-bottom: 16px;">Ask questions regarding symptoms, wellness plans, or lab explanations.</p>
-          <div id="chatMessages" class="chat-box">
-            <div style="margin-bottom: 12px; background: rgba(0,242,254,0.08); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--cyan);">
-              <strong>MediNex AI:</strong> Hello! I'm your personal health copilot. How can I assist with your wellness today?
-            </div>
-          </div>
-          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-            <button class="badge" style="cursor: pointer; background: rgba(255,255,255,0.05); color: #fff;" onclick="quickAsk('What do my blood pressure readings mean?')">Blood pressure meaning?</button>
-            <button class="badge" style="cursor: pointer; background: rgba(255,255,255,0.05); color: #fff;" onclick="quickAsk('How to prepare for annual checkup?')">Doctor visit prep</button>
-          </div>
-          <div class="chat-input-row">
-            <input type="text" id="chatInput" class="input-field" placeholder="Ask a health question..." onkeydown="if(event.key==='Enter') sendChat()">
-            <button class="btn-glow" onclick="sendChat()">Send</button>
-          </div>
-        </div>
-      </section>
+    <!-- Profile -->
+    <div id="profilePanel" class="panel">
+      <div class="card" style="max-width: 600px;">
+        <h1>Profile & Settings</h1>
+        <form onsubmit="event.preventDefault(); alert('Saved successfully!');" style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+          <div><label style="color: var(--muted); font-size: 0.9rem;">Full Name</label><input type="text" class="input" value="Sanjay Kumar" style="margin-top: 6px;"></div>
+          <div><label style="color: var(--muted); font-size: 0.9rem;">Email</label><input type="email" class="input" value="sanjay@example.com" disabled style="margin-top: 6px; opacity: 0.7;"></div>
+          <button type="submit" class="btn" style="align-self: flex-start;">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </main>
 
-      <!-- Appointments View -->
-      <section id="appointmentsView" class="view-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2>Doctor Appointments</h2>
-          <button class="btn-glow" onclick="alert('Add appointment dialog')">+ New Appointment</button>
-        </div>
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px;">
-            <div>
-              <strong>Dr. Robert Chen (Cardiologist)</strong>
-              <p style="margin: 2px 0 0; font-size: 0.85rem; color: var(--text-muted);">October 18, 2026 at 10:00 AM — City Heart Clinic</p>
-            </div>
-            <span class="badge" style="background: rgba(255,171,64,0.15); color: #ffab40;">Upcoming</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Reminders View -->
-      <section id="remindersView" class="view-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2>Medication & Health Reminders</h2>
-          <button class="btn-glow" onclick="alert('Add reminder dialog')">+ Add Reminder</button>
-        </div>
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px;">
-            <div>
-              <strong>Vitamin D3 (1000 IU)</strong>
-              <p style="margin: 2px 0 0; font-size: 0.85rem; color: var(--text-muted);">Daily at 9:00 AM — After breakfast</p>
-            </div>
-            <span class="badge">Active</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Profile View -->
-      <section id="profileView" class="view-panel">
-        <div class="card" style="max-width: 600px;">
-          <h2>User Profile & Security</h2>
-          <form onsubmit="event.preventDefault(); alert('Profile updated successfully!');" style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
-            <div>
-              <label style="display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px;">Full Name</label>
-              <input type="text" class="input-field" value="Sanjay Kumar" style="width: 100%;">
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px;">Email Address</label>
-              <input type="email" class="input-field" value="sanjay@example.com" disabled style="width: 100%; opacity: 0.7;">
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px;">Emergency Contact</label>
-              <input type="text" class="input-field" value="+1 (555) 234-5678" style="width: 100%;">
-            </div>
-            <button type="submit" class="btn-glow" style="align-self: flex-start;">Save Changes</button>
-          </form>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- Scripts -->
   <script>
-    // Tab Switching
-    function switchView(viewId) {
-      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-      document.getElementById(viewId + 'View').classList.add('active');
-      event.currentTarget.classList.add('active');
-      document.getElementById('pageTitle').textContent = event.currentTarget.textContent.replace(/^[^\w\s]+/, '').trim();
+    function changeTab(tabId, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId + 'Panel').classList.add('active');
+      if(btn) btn.classList.add('active');
+      document.getElementById('topTitle').textContent = btn ? btn.textContent.replace(/^[^\w\s]+/, '').trim() : 'Dashboard';
     }
 
-    // AI Chat Simulation
-    function quickAsk(q) {
-      document.getElementById('chatInput').value = q;
-      sendChat();
-    }
-
-    function sendChat() {
-      const input = document.getElementById('chatInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-
-      const chatBox = document.getElementById('chatMessages');
-      chatBox.innerHTML += `<div style="margin-bottom: 12px; text-align: right;"><div style="display: inline-block; background: rgba(0,136,255,0.2); padding: 10px 14px; border-radius: 8px; text-align: left;">${msg}</div></div>`;
+    function sendMsg() {
+      const input = document.getElementById('chatIn');
+      const txt = input.value.trim();
+      if(!txt) return;
+      const box = document.getElementById('chatBox');
+      box.innerHTML += `<div style="text-align: right; margin-bottom: 12px;"><div style="display: inline-block; background: rgba(59,130,246,0.3); padding: 10px 14px; border-radius: 8px; text-align: left;">${txt}</div></div>`;
       input.value = '';
-
       setTimeout(() => {
-        let reply = "Based on general health guidelines, maintaining regular vital checks and consulting your physician is recommended. Always verify with a licensed medical professional.";
-        if(msg.toLowerCase().includes('pressure')) reply = "Normal blood pressure is typically below 120/80 mmHg. Monitoring trends over time helps your cardiologist evaluate cardiovascular wellness.";
-        if(msg.toLowerCase().includes('prep')) reply = "For your doctor visit, write down your current symptoms, list all active medications, and prepare 3 key questions about your health goals.";
-
-        chatBox.innerHTML += `<div style="margin-bottom: 12px; background: rgba(0,242,254,0.08); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--cyan);"><strong>MediNex AI:</strong> ${reply}</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }, 600);
-      chatBox.scrollTop = chatBox.scrollHeight;
+        box.innerHTML += `<div style="background: rgba(6,182,212,0.1); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--cyan); margin-bottom: 12px;"><strong>MediNex AI:</strong> Based on clinical best practices, monitoring trends over time and consulting your physician ensures optimal wellness.</div>`;
+        box.scrollTop = box.scrollHeight;
+      }, 500);
+      box.scrollTop = box.scrollHeight;
     }
 
-    // Three.js 3D Health Orb Animation
     window.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('webglContainer');
-      if (!container || typeof THREE === 'undefined') return;
+      // Three.js 3D Sphere Animation
+      const box = document.getElementById('canvas3d');
+      if(box && typeof THREE !== 'undefined') {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, box.clientWidth / box.clientHeight, 0.1, 1000);
+        camera.position.z = 4;
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(box.clientWidth, box.clientHeight);
+        box.appendChild(renderer.domElement);
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-      camera.position.z = 4.5;
+        const group = new THREE.Group();
+        scene.add(group);
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      container.appendChild(renderer.domElement);
+        const sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(1.4, 20, 20),
+          new THREE.MeshBasicMaterial({ color: 0x06b6d4, wireframe: true, transparent: true, opacity: 0.4 })
+        );
+        group.add(sphere);
 
-      const group = new THREE.Group();
-      scene.add(group);
+        const inner = new THREE.Mesh(
+          new THREE.SphereGeometry(0.9, 16, 16),
+          new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.2 })
+        );
+        group.add(inner);
 
-      const wireGeo = new THREE.SphereGeometry(1.5, 24, 24);
-      const wireMat = new THREE.MeshBasicMaterial({ color: 0x00f2fe, wireframe: true, transparent: true, opacity: 0.35 });
-      const sphere = new THREE.Mesh(wireGeo, wireMat);
-      group.add(sphere);
+        function animate() {
+          requestAnimationFrame(animate);
+          group.rotation.y += 0.005;
+          group.rotation.x += 0.002;
+          renderer.render(scene, camera);
+        }
+        animate();
 
-      const innerGeo = new THREE.SphereGeometry(1.0, 16, 16);
-      const innerMat = new THREE.MeshBasicMaterial({ color: 0x4facfe, transparent: true, opacity: 0.2 });
-      group.add(new THREE.Mesh(innerGeo, innerMat));
-
-      const particleCount = 200;
-      const geom = new THREE.BufferGeometry();
-      const pos = new Float32Array(particleCount * 3);
-      for(let i=0; i<particleCount*3; i+=3) {
-        pos[i] = (Math.random() - 0.5) * 6;
-        pos[i+1] = (Math.random() - 0.5) * 6;
-        pos[i+2] = (Math.random() - 0.5) * 6;
+        window.addEventListener('resize', () => {
+          camera.aspect = box.clientWidth / box.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(box.clientWidth, box.clientHeight);
+        });
       }
-      geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const pMat = new THREE.PointsMaterial({ color: 0x00f2fe, size: 0.05, transparent: true, opacity: 0.7 });
-      const particles = new THREE.Points(geom, pMat);
-      scene.add(particles);
 
-      function animate() {
-        requestAnimationFrame(animate);
-        group.rotation.y += 0.006;
-        group.rotation.x += 0.003;
-        particles.rotation.y -= 0.003;
-        renderer.render(scene, camera);
+      // Charts
+      if(typeof Chart !== 'undefined') {
+        const c1 = document.getElementById('c1').getContext('2d');
+        new Chart(c1, {
+          type: 'line',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{ label: 'Systolic', data: [118, 122, 120, 125, 119, 121, 120], borderColor: '#06b6d4', tension: 0.3 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } } }
+        });
+
+        const c2 = document.getElementById('c2').getContext('2d');
+        new Chart(c2, {
+          type: 'line',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{ label: 'Heart Rate', data: [72, 74, 70, 75, 72, 69, 71], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', fill: true, tension: 0.3 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } } }
+        });
       }
-      animate();
-
-      window.addEventListener('resize', () => {
-        if(!container) return;
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-      });
-
-      // Initialize Charts
-      const bpCtx = document.getElementById('bpChart').getContext('2d');
-      new Chart(bpCtx, {
-        type: 'line',
-        data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          datasets: [
-            { label: 'Systolic', data: [118, 122, 120, 125, 119, 121, 120], borderColor: '#00f2fe', tension: 0.3 },
-            { label: 'Diastolic', data: [78, 80, 79, 82, 78, 79, 80], borderColor: '#4facfe', tension: 0.3 }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } } }
-      });
-
-      const hrCtx = document.getElementById('hrChart').getContext('2d');
-      new Chart(hrCtx, {
-        type: 'line',
-        data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          datasets: [{ label: 'Heart Rate (bpm)', data: [72, 75, 70, 74, 72, 69, 71], borderColor: '#00e676', backgroundColor: 'rgba(0,230,118,0.1)', fill: true, tension: 0.3 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } } }
-      });
     });
   </script>
 </body>
